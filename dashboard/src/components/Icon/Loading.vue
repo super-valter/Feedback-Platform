@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
- const props = defineProps({
+const props = defineProps({
   size: {
     type: [Number, String],
     default: 22

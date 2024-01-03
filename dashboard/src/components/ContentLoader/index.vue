@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed } from 'vue';
 
 const props = defineProps({
   maxWidth: {
@@ -27,22 +27,22 @@ const props = defineProps({
     type: Number,
   },
   animationDuration: {
-    default: "1.6s",
+    default: '1.6s',
     type: String,
   },
   height: {
-    default: "1rem",
+    default: '1rem',
     type: String,
   },
   width: {
-    default: "1rem",
+    default: '1rem',
     type: String,
   },
 });
 
 const computedWidth = computed(() => {
   const value = Math.random() * (props.width - props.minWidth);
-  return props.width ?? `${Math.floor(value + props.minWidth)}%`;
+  return props.width ?? `${Math.floor(value + props.minWidth)}%`
 });
 </script>
 

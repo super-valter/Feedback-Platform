@@ -10,8 +10,9 @@ import { defineAsyncComponent, onMounted, reactive } from 'vue'
 
 const Loading = defineAsyncComponent(() => import('./Loading.vue'))
 const Copy = defineAsyncComponent(() => import('./Copy.vue'))
+const ChevronDown = defineAsyncComponent(() => import('./ChevronDown.vue'))
 
- const iconProps = defineProps({
+const iconProps = defineProps({
   name: {
     type: [Number, String],
     required: true
@@ -24,11 +25,12 @@ const state = reactive({
 
 const listIcon = {
   'loading': Object.freeze(Loading),
-  'copy': Object.freeze(Copy)
+  'copy': Object.freeze(Copy),
+  'chevron-down': Object.freeze(ChevronDown),
 }
 
 onMounted(() => {
-    state.iconComponent = listIcon[iconProps.name]
+  state.iconComponent = listIcon[iconProps.name]
 });
 
 </script>

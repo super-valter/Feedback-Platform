@@ -17,7 +17,7 @@
 import { computed } from 'vue';
 import Contact from './Contact.vue'
 import CustomHeader from './CustomHeader.vue'
-import useModal from "../../hooks/useModal";
+import useModal from '../../hooks/useModal';
 
 const modal = useModal()
 
@@ -27,7 +27,7 @@ const dataFormatada = computed(() =>{
 })
 
 const handleAccountCreate = () => {
-   modal.open({
+  modal.open({
     component: 'ModalAccountCreate'
   })
 }

@@ -73,16 +73,16 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import { useRouter  } from "vue-router";
+import { reactive } from 'vue';
+import { useRouter  } from 'vue-router';
 
 import { useField,  } from 'vee-validate'
- import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification';
 
-import useModal from "@/hooks/useModal";
-import Icon from "../Icon/"
+import useModal from '@/hooks/useModal';
+import Icon from '../Icon/'
 import { validateEmptyAndLength3, validateEmptyAndEmail } from '@/utils/validators'
-import services from "@/services";
+import services from '@/services';
 
 
 const router = useRouter()
@@ -119,12 +119,12 @@ const onSubmit = async () => {
     })
 
     if (!errors) {
-          window.localStorage.setItem('token', data.token)
-          router.push('/feedbacks')
-          state.isLoading = false
-          modal.close()
-          return
-        }
+      window.localStorage.setItem('token', data.token)
+      router.push('/feedbacks')
+      state.isLoading = false
+      modal.close()
+      return
+    }
 
     if (errors.status === 400) {
       toast.error('Ocorreu um erro ao fazer o login, favor tentar mais tarde.')

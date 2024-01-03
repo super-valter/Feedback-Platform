@@ -1,9 +1,9 @@
-import bus from "@/utils/bus"
+import bus from '@/utils/bus'
 
 const EVENT_NAME = 'modal.toggle'
 
 
-  const useModal = () => {
+const useModal = () => {
 
   const open = (payload = {}) => {
     bus.emit(EVENT_NAME, {status: true, ...payload})

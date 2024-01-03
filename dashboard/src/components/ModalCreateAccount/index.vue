@@ -89,34 +89,34 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
-import { useField } from "vee-validate";
-import { useToast } from "vue-toastification";
+import { useField } from 'vee-validate';
+import { useToast } from 'vue-toastification';
 
-import useModal from "@/hooks/useModal";
-import Icon from "../Icon/";
+import useModal from '@/hooks/useModal';
+import Icon from '../Icon/';
 import {
   validateEmptyAndLength3,
   validateEmptyAndEmail,
-} from "@/utils/validators";
-import services from "@/services";
+} from '@/utils/validators';
+import services from '@/services';
 
 const router = useRouter();
 const modal = useModal();
 const toast = useToast();
 
 const { value: nameValue, errorMessage: nameErrorMessage } = useField(
-  "name",
+  'name',
   validateEmptyAndLength3
 );
 const { value: emailValue, errorMessage: emailErrorMessage } = useField(
-  "email",
+  'email',
   validateEmptyAndEmail
 );
 const { value: passwordValue, errorMessage: passwordErrorMessage } = useField(
-  "passaword",
+  'passaword',
   validateEmptyAndLength3
 );
 
@@ -145,8 +145,8 @@ const handleLogin = async ({ email, password }) => {
   const { data, errors } = await services.auth.login({ email, password });
 
   if (!errors) {
-    window.localStorage.setItem("token", data.token);
-    router.push("/feedbacks");
+    window.localStorage.setItem('token', data.token);
+    router.push('/feedbacks');
     modal.close();
     return;
   }
@@ -172,12 +172,12 @@ const onSubmit = async () => {
     }
 
     if (errors.status === 400) {
-      toast.error("Ocorreu um erro ao criar a conta, favor tentar mais tarde.");
+      toast.error('Ocorreu um erro ao criar a conta, favor tentar mais tarde.');
     }
 
     state.isLoading = false;
   } catch (error) {
-    toast.error("Ocorreu um erro ao criar a conta, favor tentar mais tarde.");
+    toast.error('Ocorreu um erro ao criar a conta, favor tentar mais tarde.');
     state.isLoading = false;
     state.hasErros = !!error;
   }
