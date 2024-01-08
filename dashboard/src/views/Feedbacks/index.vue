@@ -12,22 +12,22 @@
 
 
   <section class="flex justify-center w-full pb-20">
-    <div class="w-4/5 max-w-6xl py-10 grid grid-cols-4 gap-2">
+    <div class="w-4/5 max-w-6xl py-10 grid sm:grid-cols-4 gap-2">
       <div>
         <h2 class="text-3xl font-black text-brand-darkgray">
           Listagem
         </h2>
         <filters
-          v-show="!state.isloading"
+          v-show="!state.isLoading"
           @select-label="changeFeedbacksType"
           @is-loading="handleFilterLoading"
           class="mt-8 animate__animated animate__fadeIn animate__faster"
         />
-        <div v-if="state.isloading">
+        <div v-if="state.isLoading">
           <filters-loading />
         </div>
       </div>
-      <div class="px-10 pt-20 col-span-3">
+      <div class="sm:px-10 pt-20 sm:col-span-3">
         <p
           v-if="state.hasError"
           class="text-lg text-center text-gray-800 font-regular"
@@ -41,7 +41,7 @@
           Ainda nenhum feedback recebido 🥺
         </p>
 
-        <feedback-card-loading v-if="state.isloading || state.isLoadingFeedbacks" />
+        <feedback-card-loading v-if="state.isLoading || state.isLoadingFeedbacks" />
         <feedback-card
           v-else
           v-for="(feedback, index) in state.feedbacks"
@@ -49,7 +49,7 @@
           :is-opened="index === 0"
           :feedback="feedback"
         />
-        <feedback-card-loading v-if="state.isLoadingMoreFeedback" />
+        <feedback-card-loading v-if="state.isLoadingMoreFeedbacks" />
       </div>
     </div>
   </section>
@@ -68,30 +68,30 @@ import FiltersLoading from './FiltersLoading';
 import services from '@/services';
 
 const state = reactive({
-  isloading: false,
-  hasError: false,
+  isLoading: false,
   isLoadingFeedbacks: false,
+  isLoadingMoreFeedbacks: false,
+  feedbacks: [],
   currentFeedbackType: '',
-  isLoadingMoreFeedback: false,
   pagination:{
     limit: 5,
-    offset: 0
+    offset: 0,
+    total: 0
   },
-  feedbacks: []
+  hasError: false,
 })
 
 const handleErrors = (error) => {
-  state.isloading = false
+  state.isLoading = false
   state.isLoadingFeedbacks = false
   state.hasError = !!error
-  state.isLoadingMoreFeedback = false
+  state.isLoadingMoreFeedbacks = false
 }
 
 const changeFeedbacksType = async (type) => {
   try {
-    if (type === 'all') {
-      return fetchFeedbacks()
-    }
+    if (type === 'all') return fetchFeedbacks()
+
     state.isLoadingFeedbacks = true
     state.pagination.offset = 0
     state.pagination.limit = 5
@@ -111,12 +111,12 @@ const changeFeedbacksType = async (type) => {
 }
 
 const handleFilterLoading = (loding) => {
-  state.isloading = loding
+  state.isLoading = loding
 }
 
 const fetchFeedbacks = async () => {
   try {
-    state.isloading = true
+    state.isLoading = true
     const { data } = await services.feedbacks.getAll({
       ...state.pagination,
       type: state.currentFeedbackType
@@ -124,20 +124,25 @@ const fetchFeedbacks = async () => {
 
     state.feedbacks = data.results
     state.pagination = data.pagination
-    state.isloading = false
+    state.isLoading = false
   } catch (error) {
     handleErrors(error)
   }
 }
 
-const handleScroll = async () => {
-  const isBottomOfWindow = Math.ceil( document.documentElement.scrollTop + window.innerHeight) >= document.documentElement.scrollHeight
 
-  if (state.isloading || state.isLoadingMoreFeedback) return
-  if(!isBottomOfWindow) return
+
+const handleScroll = async () => {
+  const isBottomOfWindow = Math.ceil(
+    document.documentElement.scrollTop + window.innerHeight
+  ) >= document.documentElement.scrollHeight
+
+  if (state.isLoading || state.isLoadingMoreFeedbacks) return
+  if (!isBottomOfWindow) return
   if (state.feedbacks.length >= state.pagination.total) return
+
   try {
-    state.isLoadingMoreFeedback = true
+    state.isLoadingMoreFeedbacks = true
     const { data } = await services.feedbacks.getAll({
       ...state.pagination,
       type: state.currentFeedbackType,
@@ -148,11 +153,10 @@ const handleScroll = async () => {
       state.feedbacks.push(...data.results)
     }
 
-    state.isLoadingMoreFeedback = false
+    state.isLoadingMoreFeedbacks = false
     state.pagination = data.pagination
-
   } catch (error) {
-    state.isLoadingMoreFeedback = false
+    state.isLoadingMoreFeedbacks = false
     handleErrors(error)
   }
 }

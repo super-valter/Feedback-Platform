@@ -23,15 +23,13 @@ module.exports = {
   overrides: [
     {
       files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
-        '.eslintrc.{js,cjs}'
+        '**/*.spec.{j,t}s?(x)',
       ],
       env: {
         jest: true
       },
       'parserOptions': {
-        'sourceType': 'script'
+        'sourceType': 'module'
       }
     }
   ],

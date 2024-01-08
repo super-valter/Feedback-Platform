@@ -1,7 +1,7 @@
 import palette from './palette.js'
 
 /** @type {import('tailwindcss').Config} */
-export const content = ["./src/**/*.{html,js,vue,jsx}"]
+export const content = ['./src/**/*.{html,js,vue,jsx}']
 export const presets = []
 export const darkMode = 'media'
 export const theme = {

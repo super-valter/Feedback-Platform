@@ -17,29 +17,24 @@
     <div
       v-if="state.isOpen"
       :class="{animate__fadeOutUp: state.isClosing}"
-      class="flex mt-8 animate__animated animate__fadeInUp animate__faster"
+      class="grid grid-cols-4 gap-4 animate__animated animate__fadeInUp animate__faster"
     >
-      <div class="flex flex-col w-1/2">
-        <div class="flex flex-col">
-          <span class="font-bold text-gray-400 uppercase select-none">PÁGINA</span>
-          <span class="font-medium text-gray-700">{{ props.feedback.page }}</span>
-        </div>
+      <div class="col-span-4 md:col-span-2">
+        <span class="font-black text-gray-400 uppercase select-none block">USUÁRIO</span>
+        <span class="font-medium text-gray-700">{{ feedback.fingerprint }}</span>
       </div>
-
-      <div class="flex flex-col w-1/2">
-        <div class="flex flex-col">
-          <span class="font-bold text-gray-400 uppercase select-none">USUÁRIO</span>
-          <span class="font-medium text-gray-700">{{ props.feedback.fingerprint }}</span>
-        </div>
+      <div class="col-span-4 md:col-span-2">
+        <span class="font-black text-gray-400 uppercase select-none block">DISPOSITIVO</span>
+        <span class="font-medium text-gray-700">{{ feedback.device }}</span>
       </div>
-
-      <div class="flex flex-col w-1/2">
-        <div class="flex flex-col">
-          <span class="font-bold text-gray-400 uppercase select-none">DISPOSITIVO</span>
-          <span class="font-medium text-gray-700">{{ props.feedback.device }}</span>
-        </div>
+      <div class="col-span-4">
+        <span class="font-black text-gray-400 uppercase select-none">PÁGINA</span>
+        <p class="font-medium text-gray-700 text-ellipsis overflow-hidden">
+          {{ feedback.page }}
+        </p>
       </div>
     </div>
+
     <div
       v-if="!state.isOpen"
       class="flex justify-end mt-8"
